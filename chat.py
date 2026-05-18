@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from chroma_db import create_vector_store
 
 from langchain_chroma import Chroma
 from langchain_huggingface import (
@@ -18,13 +19,7 @@ embedding_model = HuggingFaceEmbeddings(
     model_name="BAAI/bge-small-en-v1.5"
 )
 
-db = Chroma(
-    persist_directory=persistent_directory,
-    embedding_function=embedding_model,
-    collection_name="tasks",
-    collection_metadata={"hnsw:space": "cosine"}
-)
-
+db = create_vector_store()
 
 llm = HuggingFaceEndpoint(
     repo_id="Qwen/Qwen2.5-7B-Instruct",
